@@ -1,35 +1,28 @@
-/**
- * Simple shell interface program.
- *
- * Operating System Concepts - Ninth Edition
- * Copyright John Wiley & Sons - 2013
- */
-
+/* tush -- totally useless shell */
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
+#include "histlist.h"
 
+int main(void) {
+	// Create the history "object"
+	histAlloc(history);
 
+	// Loop until EOF
+	while (1) {
+		// Print the prompt
+		printf("$ ");
+		fflush(stdout);
 
-#define MAX_LINE		80 /* 80 chars per line, per command */
+		// Exit on EOF (or ctrl+d)
+		if (fgets(histAt(history, 0), CL_LEN, stdin) == NULL) break;
 
-int main(void)
-{
-	char *args[MAX_LINE/2 + 1];	/* command line (of 80) has max of 40 arguments */
-    int should_run = 1;
-	
-	int i, upper;
-		
-    while (should_run){   
-        printf("osh>");
-        fflush(stdout);
-        
-        /**
-         * After reading user input, the steps are:
-         * (1) fork a child process
-         * (2) the child process will invoke execvp()
-         * (3) if command included &, parent will invoke wait()
-         */
-    }
-    
+		histPush(history); // Add a new history entry for the next iteration
+	}
+
+	// Free the history
+	histFree(history);
+	printf("tush: exit\n");
+	fflush(stdout);
 	return 0;
 }
