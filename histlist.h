@@ -35,7 +35,7 @@ typedef struct histQueue {
 void histPush(histQueue*);
 
 // Return the pointer to the nth command string
-char* histAt(histQueue*, unsigned int);
+char* histAt(histQueue*, int);
 
 // Remove hl Node from history
 void histPop(histQueue*);

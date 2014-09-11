@@ -10,11 +10,21 @@ void histPush(histQueue* hist) {
 	hist->head = t;
 }
 
-char* histAt(histQueue* hist, unsigned int n) {
-	histNode* t = hist->head;
-	while (t->next && n) {
-		t = t->next;
-		--n;
+char* histAt(histQueue* hist, int n) {
+	histNode* t;
+	if (n > 0) {
+		t = hist->tail;
+		--n; // When user specifies 1, they mean the first
+		while (t->prev && n) {
+			t = t->prev;
+			--n;
+		}
+	} else {
+		t = hist->head;
+		while (t->next && n) {
+			t = t->next;
+			++n;
+		}
 	}
 	return t->line;
 }
