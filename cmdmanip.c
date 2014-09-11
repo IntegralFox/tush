@@ -36,7 +36,8 @@ unsigned int hasAmp(char* line) {
 
 void bangSub(histQueue* history) {
 	char *ci, *bi, *ei; // check index, begin index, end index
-	unsigned int hi, subc; // history index, substitution length
+	unsigned int subc; // substitution length
+	int hi; // history index
 	char* line = histAt(history, 0);
 
 	ei = line;
@@ -47,12 +48,12 @@ void bangSub(histQueue* history) {
 		--ci;
 		if (*ci == '!') {
 			if (ci != line && *(ci-1) == '!') { // ie "!!" and ci is the second bang
-				hi = 1; // previous history item
+				hi = -1; // previous history item
 				bi = ci + 1; // Beginning of shift starts one byte to the right of the second bang
 				ci -= 1; // Replacement starts at the first bang
 			} else {
 				hi = atoi(ci+1);
-				bi = ci + 1;
+				bi = ci + 2; // The next character will either be a number or a '-' so skip it
 				while (isdigit(*bi)) ++bi; // Beginnning of shift is the first non digit after the bang
 			}
 			subc = strlen(histAt(history, hi));
