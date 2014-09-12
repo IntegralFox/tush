@@ -86,3 +86,8 @@ void parseArgs(char* line, char** argv) {
 int wantsTheH(char* line) {
 	return strcmp(line, "history") == 0;
 }
+
+int shouldExit(char* line) {
+	// If return was NULL (EOF) or the line was `exit`
+	return line == NULL || strcmp(line, "exit\n") == 0;
+}

@@ -24,4 +24,7 @@ unsigned int hasAmp(char*);
 // Determines if this is the history keyword
 int wantsTheH(char*);
 
+// Determines if the shell should exit
+int shouldExit(char*);
+
 #endif
