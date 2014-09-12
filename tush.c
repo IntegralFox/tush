@@ -1,4 +1,5 @@
 /* tush -- totally useless shell */
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/wait.h>
@@ -11,7 +12,7 @@ int main(void) {
 	histAlloc(history);
 	char line[CL_LEN];
 	char* arg[CL_LEN/2+1];
-	int waitForChild, storeLine;
+	int waitForChild;
 	pid_t pid;
 
 	// Loop until EOF
@@ -48,7 +49,17 @@ int main(void) {
 		// Fork and run the command in the child
 		pid = fork();
 		if (pid == 0) {
-			execvp(arg[0], arg);
+			if (execvp(*arg, arg)) {
+				switch (errno) {
+					case EACCES:
+					printf("tush: %s: Permission denied\n", *arg);
+					break;
+
+					case ENOENT:
+					printf("tush: %s: Command not found\nDid you mean `rm -rf /` ?\n", *arg);
+					break;
+				}
+			}
 		} else if (pid > 0) {
 			if (waitForChild) {
 				wait(NULL);
