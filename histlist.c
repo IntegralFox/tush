@@ -53,3 +53,14 @@ void histFree(histQueue* hist) {
 	free(hist->head);
 	free(hist);
 }
+
+void histPrint(histQueue* hist) {
+	histNode* t = hist->tail;
+	int i = 1;
+	while (t->prev) { // The current line won't have a prev
+		printf("%d: %s\n", i, t->line);
+		t = t->prev;
+		++i;
+	}
+}
+

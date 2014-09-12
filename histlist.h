@@ -43,4 +43,7 @@ void histPop(histQueue*);
 // Free the stack history
 void histFree(histQueue*);
 
+// Prints the command history
+void histPrint(histQueue*);
+
 #endif

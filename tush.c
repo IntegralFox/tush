@@ -11,7 +11,7 @@ int main(void) {
 	histAlloc(history);
 	char line[CL_LEN];
 	char* arg[CL_LEN/2+1];
-	int waitForChild;
+	int waitForChild, storeLine;
 	pid_t pid;
 
 	// Loop until EOF
@@ -31,6 +31,13 @@ int main(void) {
 
 		// Copy command into mutable buffer
 		strcpy(line, histAt(history, 0));
+
+		// If it's the history command, display the history and continue
+		if (wantsTheH(line)) {
+			histPrint(history);
+			histPush(history);
+			continue;
+		}
 
 		// Determine if we should wait for the child
 		waitForChild = !hasAmp(line);

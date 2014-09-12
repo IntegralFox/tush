@@ -82,3 +82,7 @@ void parseArgs(char* line, char** argv) {
 	}
 	argv[argc] = NULL;
 }
+
+int wantsTheH(char* line) {
+	return strcmp(line, "history") == 0;
+}
