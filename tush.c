@@ -59,17 +59,19 @@ int main(void) {
 					printf("tush: %s: Command not found\nDid you mean `rm -rf /` ?\n", *arg);
 					break;
 				}
+				_exit(0);
 			}
 		} else if (pid > 0) {
 			if (waitForChild) {
 				wait(NULL);
 			}
 		} else {
-			printf("Could not fork.\n");
+			printf("tush: Could not fork\n");
 			fflush(stdout);
 		}
 
-		histPush(history); // Add a new history entry for the next iteration
+		// Add a new history entry for the next iteration
+		histPush(history);
 	}
 
 	// Free the history
