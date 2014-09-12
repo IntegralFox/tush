@@ -1,11 +1,8 @@
 # tush - Totally Useless SHell
-*It's complete ass.*
-
 
 ## Features
-* Command line history
-* Bang history syntax (identical to bash)
-
+* Command line history (via `history` builtin)
+* Bang history syntax (positive and negative indices and !! shortcut)
 
 ## Building
-Run `make` to build. Execute the shell with `./tush`.
+Run `make` to build. Execute the shell with `./tush`. Exit with `exit` or `ctrl-d`.
