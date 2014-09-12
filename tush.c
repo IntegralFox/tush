@@ -12,6 +12,7 @@ int main(void) {
 	histAlloc(history);
 	char line[CL_LEN];
 	char* arg[CL_LEN/2+1];
+	char* readStatus;
 	int waitForChild;
 	pid_t pid;
 
@@ -21,8 +22,11 @@ int main(void) {
 		printf("$ ");
 		fflush(stdout);
 
-		// Exit on EOF (or ctrl+d)
-		if (fgets(histAt(history, 0), CL_LEN, stdin) == NULL) break;
+		// Get the next line into the current history item
+		readStatus = fgets(histAt(history, 0), CL_LEN, stdin);
+
+		// Determine if we should exit via EOF or `exit`
+		if (shouldExit(readStatus)) break;
 
 		// Remove trailing junk
 		nullEnd(histAt(history, 0));
